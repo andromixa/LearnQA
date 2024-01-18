@@ -2,8 +2,10 @@ import pytest
 from lib.my_requests import MyRequests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
+import allure
 
 
+@allure.epic('Authorisation tests')
 class TestUserAuth(BaseCase):
 
     conditions = [
@@ -24,6 +26,7 @@ class TestUserAuth(BaseCase):
         self.token = self.get_header(response, 'x-csrf-token')
         self.user_id = self.get_json_value(response, 'user_id')
 
+    @allure.description('Parametrized auth tests: valid, without headers, without cookies')
     @pytest.mark.parametrize('condition', conditions)
     def test_auth_user(self, condition):
         response = MyRequests.get(

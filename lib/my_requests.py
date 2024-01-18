@@ -1,26 +1,33 @@
 import requests
 from lib.logger import Logger
+import allure
+from environment import BASE_ENV
+
 
 class MyRequests:
     @staticmethod
     def post(url: str, data: dict = None, headers: dict = 0, cookies: dict = 0):
-        return MyRequests._send(url, data, headers, cookies, 'POST')
+        with allure.step(f'POST request on "{url}"'):
+            return MyRequests._send(url, data, headers, cookies, 'POST')
 
     @staticmethod
     def get(url: str, data: dict = None, headers: dict = 0, cookies: dict = 0):
-        return MyRequests._send(url, data, headers, cookies, 'GET')
+        with allure.step(f'GET request on "{url}"'):
+            return MyRequests._send(url, data, headers, cookies, 'GET')
 
     @staticmethod
     def put(url: str, data: dict = None, headers: dict = 0, cookies: dict = 0):
-        return MyRequests._send(url, data, headers, cookies, 'PUT')
+        with allure.step(f'PUT request on "{url}"'):
+            return MyRequests._send(url, data, headers, cookies, 'PUT')
 
     @staticmethod
     def delete(url: str, data: dict = None, headers: dict = 0, cookies: dict = 0):
-        return MyRequests._send(url, data, headers, cookies, 'DELETE')
+        with allure.step(f'DELETE request on "{url}"'):
+            return MyRequests._send(url, data, headers, cookies, 'DELETE')
 
     @staticmethod
     def _send(url: str, data: dict, headers: dict, cookies: dict, method: str):
-        url = f'https://playground.learnqa.ru/api/{url}'
+        url = f'{BASE_ENV.get_base_url()git}{url}'
 
         if headers is None:
             headers = {}
